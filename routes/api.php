@@ -26,4 +26,4 @@ Route::post('/register', [UserController::class, 'register']);
 Route::get('/logout', [UserController::class, 'logout']);
 Route::get('/instruments/index/', [InstrumentController::class, 'index']);
 Route::get('/watchlist/index/', [WatchlistController::class, 'index']);
-Route::get('/watchlist/store/', [WatchlistController::class, 'store']);
+Route::post('/watchlist/store/', [WatchlistController::class, 'store']);

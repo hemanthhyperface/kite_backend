@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Watchlist;
 use Illuminate\Http\Request;
-
+use Auth;
 class WatchlistController extends Controller
 {
     /**
@@ -16,7 +16,7 @@ class WatchlistController extends Controller
     {
         $customer = Customer::where('user_id', Auth::user()->id)->first();
         if ($customer) {
-            $watch_lists = Watchlist::where('customer_id', $customer->id)->get();
+            $watch_lists = Watchlist::where('customer_id', Auth::user()->id)->get();
             if ($watch_lists) {
                 return response()->json(['watch_lists' => $watch_lists]);
             } else {
@@ -45,7 +45,7 @@ class WatchlistController extends Controller
      */
     public function store(Request $request)
     {
-        $watch_list = Watchlist::where('watchlist_name', $request->watchlist_name)->where('customer_id', $request->customer_id)->count();
+        $watch_list = Watchlist::where('watchlist_name', 1)->where('customer_id', Auth::user()->id)->count();
         if ($watch_list < 50) {
             $w = (new Watchlist)->addToWatchlist($request);
             if ($w) {
