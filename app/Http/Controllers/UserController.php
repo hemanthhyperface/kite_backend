@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -37,6 +38,14 @@ class UserController extends Controller
             // NO PASSWORD CONFIRMATION
             'password' => ['required', 'string', 'min:4'],
         ]);
+    }
+
+    public function user(){
+        if(Auth::check()){
+            return response()->json(['user' => Auth::user()]);
+        }else{
+            return response('Not Logged In');
+        }
     }
 
     /**

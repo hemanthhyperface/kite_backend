@@ -14,11 +14,20 @@ class WatchlistController extends Controller
      */
     public function index()
     {
-        $customer = Customer::where('user_id', Auth::user()->id)->first();
+        $customer = 1;
+        $wl1 =array();
+        $wl2 =array();
+        $wl3 =array();
+        $wl4 =array();
+        $wl5 =array();
         if ($customer) {
-            $watch_lists = Watchlist::where('customer_id', Auth::user()->id)->get();
-            if ($watch_lists) {
-                return response()->json(['watch_lists' => $watch_lists]);
+            $wl1= Watchlist::where('customer_id', Auth::user()->id)->where('watchlist_name',1)->get();
+            $wl2=Watchlist::where('customer_id', Auth::user()->id)->where('watchlist_name',2)->get();
+            $wl3=Watchlist::where('customer_id', Auth::user()->id)->where('watchlist_name',3)->get();
+            $wl4=Watchlist::where('customer_id', Auth::user()->id)->where('watchlist_name',4)->get();
+            $wl5=Watchlist::where('customer_id', Auth::user()->id)->where('watchlist_name',5)->get();
+            if ($wl1) {
+                return response()->json(['wl1' => $wl1,'wl2' => $wl2,'wl3' => $wl3,'wl4' => $wl4,'wl5' => $wl5,]);
             } else {
                 return response(0);
             }
@@ -45,11 +54,16 @@ class WatchlistController extends Controller
      */
     public function store(Request $request)
     {
+        $wl1 =array();
+        $wl2 =array();
+        $wl3 =array();
+        $wl4 =array();
+        $wl5 =array();
         $watch_list = Watchlist::where('watchlist_name', 1)->where('customer_id', Auth::user()->id)->count();
         if ($watch_list < 50) {
             $w = (new Watchlist)->addToWatchlist($request);
             if ($w) {
-                return response()->json(['watch_list' => $w]);
+                return response()->json(['wl1' => $w]);
             } else {
                 return response(0);
             }

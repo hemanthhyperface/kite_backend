@@ -17,13 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
+Route::get('/user', [UserController::class, 'user'])->middleware('auth:sanctum');
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 Route::get('/logout', [UserController::class, 'logout']);
-Route::get('/instruments/index/', [InstrumentController::class, 'index']);
-Route::get('/watchlist/index/', [WatchlistController::class, 'index']);
-Route::post('/watchlist/store/', [WatchlistController::class, 'store']);
+Route::get('/instruments/index/', [InstrumentController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/watchlist/index/', [WatchlistController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/watchlist/store/', [WatchlistController::class, 'store'])->middleware('auth:sanctum');
