@@ -54,16 +54,11 @@ class WatchlistController extends Controller
      */
     public function store(Request $request)
     {
-        $wl1 =array();
-        $wl2 =array();
-        $wl3 =array();
-        $wl4 =array();
-        $wl5 =array();
-        $watch_list = Watchlist::where('watchlist_name', 1)->where('customer_id', Auth::user()->id)->count();
+        $watch_list = Watchlist::where('watchlist_name', $request->activeList)->where('customer_id', Auth::user()->id)->count();
         if ($watch_list < 50) {
             $w = (new Watchlist)->addToWatchlist($request);
             if ($w) {
-                return response()->json(['wl1' => $w]);
+                return response()->json(['wl'.$request->activeList => $w]);
             } else {
                 return response(0);
             }
@@ -74,13 +69,16 @@ class WatchlistController extends Controller
 
     public function removeItem(Request $request)
     {
-        $watch_list = Watchlist::where('watchlist_name', $request->watchlist_name)->where('customer_id', $request->customer_id)->where('instrument_id', $request->instrument_id)->first();
-        if ($watch_list) {
-            $w = (new Watchlist)->removeFromWatchlist($request);
-            return response($w);
-        } else {
-            return response('Item not found in your watchlist.');
+        
+        $watch_list = Watchlist::where('customer_id',Auth::user()->id)->where('instrument_id',$request->id)->where('watchlist_name',$request->activeList)->with('instrument')->first();
+        
+        if($watch_list){
+        $watch_list->delete();
+        return response('Deleted Successfully');
+        }else{
+        return response('Network error');    
         }
+      
     }
 
     /**

@@ -25,3 +25,4 @@ Route::get('/logout', [UserController::class, 'logout']);
 Route::get('/instruments/index/', [InstrumentController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/watchlist/index/', [WatchlistController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/watchlist/store/', [WatchlistController::class, 'store'])->middleware('auth:sanctum');
+Route::post('/watchlist/removeItem/', [WatchlistController::class, 'removeItem'])->middleware('auth:sanctum');
