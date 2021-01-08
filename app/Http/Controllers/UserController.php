@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
 
 class UserController extends Controller
 {
@@ -20,7 +18,7 @@ class UserController extends Controller
         $this->guard()->login($user);
         return response()->json([
             'user' => $user,
-            'message' => 'registration successful'
+            'message' => 'registration successful',
         ], 200);
     }
     /**
@@ -40,14 +38,16 @@ class UserController extends Controller
         ]);
     }
 
-    public function user(){
-        if(Auth::check()){
+    public function user()
+    {
+        if (Auth::check()) {
             return response()->json(['user' => Auth::user()]);
-        }else{
+        } else {
             return response('Not Logged In');
         }
     }
 
+   
     /**
      * Create a new user instance after a valid registration.
      *

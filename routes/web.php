@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InstrumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+Route::get('/instruments/importCsv/', [InstrumentController::class, 'importCsv']);
 Route::view('/{path?}', 'home');
